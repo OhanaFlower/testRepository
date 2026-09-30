@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Authentication {
+//追加したコメント
   //ユーザー名
 	private String username;
   //パスワード
