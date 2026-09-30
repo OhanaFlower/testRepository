@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ToDoフォーム</title>
+</head>
+<body>
+<!--	タイトル：登録or編集-->
+  <h2 th:if="${toDoForm.isNew}">新規ToDo登録</h2>
+  <h2 th:unless="${toDoForm.isNew}">ToDo編集</h2>
+  
+<!--  アクション：登録or編集-->
+  <form th:action="${toDoForm.isNew} ? @{/todos/save} : @{/todos/update}"
+  		th:object ="${toDoForm}" method = "post">
+  <!--↑submitなどでどこへ飛ばすかを、formに問われた時これに従う。-->
+		
+<!--		idは更新時に必要のため、hiddenで持つ-->
+	<input type = "hidden" th:field="*{id}">
+	<tr>
+		<th>ToDo</th>
+		<td>
+			<input type="text" th:field="*{todo}">
+			<!--todo用：バリデーションエラー表示-->
+			<span th:if="${#fields.hasErrors('todo')}"
+			  th:errors="*{todo}" style="color:red;">
+			  エラーがあれば表示
+		    </span>
+		</td>
+	</tr>
+	<br><br>
+	<tr>
+		<th>詳細</th>
+		<td>
+			<textarea rows="5" cols="30" th:field="*{detail}">
+			<!--詳細用：バリデーションエラー表示-->
+			<span th:if="${#fields.hasErrors('detail')}"
+			  th:errors="*{detail}" style="color:red;">
+			  エラーがあれば表示
+			</span>
+			</textarea>
+		</td>
+	</tr>
+	</table>
+<!--	ボタン:登録or編集-->
+		<input th:if="${toDoForm.isNew}" type="submit" value="登録">
+		<input th:unless="${toDoForm.isNew}" type="submit" value="更新">
+   </form>
+   <a th:href="@{/todos}">戻る</a>
+</body>
+</html>
